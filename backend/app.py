@@ -10,10 +10,6 @@ from requests.auth import HTTPBasicAuth
 app = Flask(__name__)
 CORS(app)
 load_dotenv()
-username = os.getenv("ORACLE_USER")
-password = os.getenv("ORACLE_PASS")
-print("USERNAME:", repr(username))
-print("PASSWORD:", repr(password))
 
 
 @app.route("/emp", methods=["POST"])
@@ -24,8 +20,6 @@ def emp():
         auth=HTTPBasicAuth(username, password),
         headers={"Accept": "application/json"}
     )
-    print(">>> status:", res.status_code)
-    print(res.text[:200])
     employees = res.json()["items"]
     filters = request.get_json() # this is the user search
     actual = []
